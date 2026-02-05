@@ -1,5 +1,7 @@
 # Project: TicTacToe 6기
 
+## 답변은 모두 한글로 해줘.
+
 ## Project Overview
 This is a Unity project, likely a game titled "TicTacToe 6기" as indicated by the `README.md`. The project is structured as a standard Unity application, utilizing C# for scripting and various Unity packages to facilitate development. It appears to have been initialized from a 2D template (`com.unity.template.2d@11.0.0`). The project incorporates several Unity packages including the Input System, Visual Scripting, 2D Enhancers, and Unity's AI Assistant/Generators/Inference tools, suggesting potential use of AI functionalities within the game.
 
