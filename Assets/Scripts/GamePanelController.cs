@@ -5,7 +5,7 @@ namespace Tictactoe {
     public class GamePanelController : MonoBehaviour {
 
         public void OnClickBackButton(){
-            GameManager.Instance.ChangeToMainScece();
+            GameManager.Instance.ChangeToMainScene();
         }
         
         public void OnClickSettingsButton(){

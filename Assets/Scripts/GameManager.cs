@@ -7,23 +7,26 @@ namespace Tictactoe {
     public class GameManager : Singleton<GameManager> {
 
         [SerializeField] private GameObject settingsPanelPrefab;
-        [SerializeField] private Canvas canvas;
+        
+        private Canvas _canvas;
 
         private GameType _gameType;
 
-        protected override void OnSceneLoad(Scene scene, LoadSceneMode mode){ }
+        protected override void OnSceneLoad(Scene scene, LoadSceneMode mode){
+            _canvas = FindFirstObjectByType<Canvas>();
+        }
 
         public void OpenSettingsPanel(){
-            GameObject settingPanelObject = Instantiate(settingsPanelPrefab, canvas.transform);
+            GameObject settingPanelObject = Instantiate(settingsPanelPrefab, _canvas.transform);
             settingPanelObject.GetComponent<SettingsPanelController>().Show();
         }
 
-        public void ChangeToGameScece(GameType gameType){
+        public void ChangeToGameScene(GameType gameType){
             _gameType = gameType;
             SceneManager.LoadScene("Game");
         }
         
-        public void ChangeToMainScece(){
+        public void ChangeToMainScene(){
             SceneManager.LoadScene("Main");
         }
 
