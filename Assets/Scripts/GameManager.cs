@@ -7,13 +7,17 @@ namespace Tictactoe {
     public class GameManager : Singleton<GameManager> {
 
         [SerializeField] private GameObject settingsPanelPrefab;
-        
+
         private Canvas _canvas;
 
         private GameType _gameType;
 
         protected override void OnSceneLoad(Scene scene, LoadSceneMode mode){
             _canvas = FindFirstObjectByType<Canvas>();
+
+            if (scene.name == SCENE_GAME){
+                FindFirstObjectByType<BlockController>()?.InitBlocks();
+            }
         }
 
         public void OpenSettingsPanel(){
@@ -25,7 +29,7 @@ namespace Tictactoe {
             _gameType = gameType;
             SceneManager.LoadScene("Game");
         }
-        
+
         public void ChangeToMainScene(){
             SceneManager.LoadScene("Main");
         }

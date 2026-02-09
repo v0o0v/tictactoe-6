@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Tictactoe {
@@ -13,9 +14,14 @@ namespace Tictactoe {
 
         private int _blockIndex;
 
-        public void InitMarker(int blockIndex){
+        public delegate void OnBlockClicked(int index);
+
+        private OnBlockClicked _onBlockClicked;
+
+        public void InitMarker(int blockIndex, OnBlockClicked onBlockClicked){
             _blockIndex = blockIndex;
             SetMarker(MarkerType.None);
+            _onBlockClicked = onBlockClicked;
         }
 
         public void SetMarker(MarkerType markerType){
@@ -36,8 +42,7 @@ namespace Tictactoe {
             if (EventSystem.current.IsPointerOverGameObject()){
                 return;
             }
-
-            Debug.Log("Block clicked: " + _blockIndex);
+            _onBlockClicked?.Invoke(_blockIndex);
         }
 
     }
