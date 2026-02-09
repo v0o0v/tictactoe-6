@@ -14,11 +14,9 @@ namespace Tictactoe {
 
         private int _blockIndex;
 
-        public delegate void OnBlockClicked(int index);
+        private Action<int> _onBlockClicked;
 
-        private OnBlockClicked _onBlockClicked;
-
-        public void InitMarker(int blockIndex, OnBlockClicked onBlockClicked){
+        public void InitMarker(int blockIndex, Action<int> onBlockClicked){
             _blockIndex = blockIndex;
             SetMarker(MarkerType.None);
             _onBlockClicked = onBlockClicked;

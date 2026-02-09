@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using static Tictactoe.Block;
 using static Tictactoe.Constants;
 
@@ -8,9 +9,7 @@ namespace Tictactoe {
 
         [SerializeField] public Block[] blocks;
 
-        public delegate void OnBlockClicked(int index);
-
-        public OnBlockClicked onBlockClicked;
+        public Action<int> onBlockClicked;
 
         public void InitBlocks(){
             for (int i = 0; i < blocks.Length; i++){
