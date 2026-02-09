@@ -6,6 +6,10 @@
         public const string SCENE_GAME = "Game";
         
         public enum GameType { SinglePlay, DualPlay }
+        
+        public enum PlayerType { None, Player1, Player2 }
+        
+        public const int BOARD_SIZE = 3;
 
     }
 

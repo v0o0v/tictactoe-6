@@ -11,12 +11,15 @@ namespace Tictactoe {
         private Canvas _canvas;
 
         private GameType _gameType;
+        private GameLogic _gameLogic;
 
         protected override void OnSceneLoad(Scene scene, LoadSceneMode mode){
             _canvas = FindFirstObjectByType<Canvas>();
 
             if (scene.name == SCENE_GAME){
-                FindFirstObjectByType<BlockController>()?.InitBlocks();
+                BlockController blockController = FindFirstObjectByType<BlockController>();
+                blockController?.InitBlocks();
+                _gameLogic = new GameLogic(GameType.DualPlay, blockController);
             }
         }
 

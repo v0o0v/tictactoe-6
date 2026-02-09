@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using static Tictactoe.Block;
 
 namespace Tictactoe {
@@ -17,13 +18,16 @@ namespace Tictactoe {
             }
         }
 
-        public void PlaceMarker(int blockIndex, MarkerType markerType){
-            if (blockIndex < 0 || blockIndex >= blocks.Length){
-                Debug.LogError("Invalid block index: " + blockIndex);
-                return;
+        public void PlaceMarker(int blockIndex, Constants.PlayerType playerType){
+            switch (playerType){
+                case Constants.PlayerType.Player1:
+                    blocks[blockIndex].SetMarker(MarkerType.O);
+                    break;
+                case Constants.PlayerType.Player2:
+                    blocks[blockIndex].SetMarker(MarkerType.X);
+                    break;
             }
-
-            blocks[blockIndex].SetMarker(markerType);
+            
         }
 
     }

@@ -1,0 +1,17 @@
+﻿namespace Tictactoe.States {
+
+    public abstract class BaseState {
+
+        public abstract void OnEnter(GameLogic gameLogic);
+        public abstract void HandleMove(GameLogic gameLogic, int index);
+        public abstract void HandleNextTurn(GameLogic gameLogic);
+        public abstract void OnExit(GameLogic gameLogic);
+
+        public void ProcessMove(GameLogic gameLogic, int index, Constants.PlayerType playerType){
+            gameLogic.PlaceMarker(index, playerType);
+            HandleNextTurn(gameLogic);
+        }
+
+    }
+
+}
