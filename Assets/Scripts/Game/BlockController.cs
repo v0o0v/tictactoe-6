@@ -1,6 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using static Tictactoe.Block;
+using static Tictactoe.Constants;
 
 namespace Tictactoe {
 
@@ -18,16 +18,8 @@ namespace Tictactoe {
             }
         }
 
-        public void PlaceMarker(int blockIndex, Constants.PlayerType playerType){
-            switch (playerType){
-                case Constants.PlayerType.Player1:
-                    blocks[blockIndex].SetMarker(MarkerType.O);
-                    break;
-                case Constants.PlayerType.Player2:
-                    blocks[blockIndex].SetMarker(MarkerType.X);
-                    break;
-            }
-            
+        public void PlaceMarker(int blockIndex, PlayerType playerType){
+            blocks[blockIndex].SetMarker(playerType == PlayerType.Player1 ? MarkerType.O : MarkerType.X);
         }
 
     }

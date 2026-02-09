@@ -8,8 +8,8 @@
         public abstract void OnExit(GameLogic gameLogic);
 
         public void ProcessMove(GameLogic gameLogic, int index, Constants.PlayerType playerType){
-            gameLogic.PlaceMarker(index, playerType);
-            HandleNextTurn(gameLogic);
+            if (gameLogic.PlaceMarker(index, playerType))
+                HandleNextTurn(gameLogic);
         }
 
     }

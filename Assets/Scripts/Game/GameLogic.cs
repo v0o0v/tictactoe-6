@@ -37,15 +37,28 @@ namespace Tictactoe {
             _currentState?.OnEnter(this);
         }
 
-        public void PlaceMarker(int index, PlayerType playerType){
+        public bool PlaceMarker(int index, PlayerType playerType){
             int row = index / BOARD_SIZE;
             int col = index % BOARD_SIZE;
-            _board[row, col] = playerType;
+
+            if (_board[row, col] != PlayerType.None)
+                return false;
+
             blockController.PlaceMarker(index, playerType);
+            _board[row, col] = playerType;
+            return true;
         }
 
         public void ChangeGameState(){
             SetState(_currentState == playerAState ? playerBState : playerAState);
+        }
+
+        public void CheckGameResult(){
+            // Game over logic to be implemented
+        }
+
+        public bool CheckGameWin(PlayerType playerType, PlayerType[,] board){
+            return false;
         }
 
     }
