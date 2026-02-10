@@ -1,5 +1,4 @@
 ﻿using Tictactoe.States;
-using UnityEngine;
 using static Tictactoe.Constants;
 
 namespace Tictactoe {
@@ -111,7 +110,15 @@ namespace Tictactoe {
         }
 
         public void EndGame(GameResult gameResult){
-            Debug.Log(gameResult);
+            string resultStr = gameResult switch{
+                GameResult.Win => "Player1 승리!",
+                GameResult.Lose => "Player2 승리!",
+                GameResult.Draw => "무승부!",
+                _ => ""
+            };
+            GameManager.Instance.OpenConfirmPanel(resultStr
+                , () => { GameManager.Instance.ChangeToMainScene(); }
+            );
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Tictactoe {
@@ -22,10 +23,13 @@ namespace Tictactoe {
             panelTransform.DOScale(1, 0.3f).SetEase(Ease.OutBack);
         }
 
-        public void Hide(){
+        public void Hide(Action onComplete = null){
             _canvasGroup.DOFade(0, 0.3f).SetEase(Ease.Linear);
             panelTransform.DOScale(0, 0.3f).SetEase(Ease.InBack)
-                .OnComplete(() => Destroy(gameObject));
+                .OnComplete(() => {
+                    onComplete?.Invoke();
+                    Destroy(gameObject);
+                });
         }
 
     }

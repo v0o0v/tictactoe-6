@@ -10,7 +10,9 @@ namespace Tictactoe {
         [SerializeField] private Image playerBTurnImage;
 
         public void OnClickBackButton(){
-            GameManager.Instance.ChangeToMainScene();
+            GameManager.Instance.OpenConfirmPanel("게임을 종료합니다", () => {
+                GameManager.Instance.ChangeToMainScene();
+            });
         }
 
         public void OnClickSettingsButton(){

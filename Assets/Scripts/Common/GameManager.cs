@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Tictactoe.Constants;
 
@@ -7,6 +8,7 @@ namespace Tictactoe {
     public class GameManager : Singleton<GameManager> {
 
         [SerializeField] private GameObject settingsPanelPrefab;
+        [SerializeField] private GameObject confirmPanelPrefab;
 
         private Canvas _canvas;
         private GamePanelController _gamePanelController;
@@ -32,6 +34,11 @@ namespace Tictactoe {
         public void OpenSettingsPanel(){
             GameObject settingPanelObject = Instantiate(settingsPanelPrefab, _canvas.transform);
             settingPanelObject.GetComponent<SettingsPanelController>().Show();
+        }
+
+        public void OpenConfirmPanel(string message, Action onConfirm){
+            GameObject confirmPanel = Instantiate(confirmPanelPrefab, _canvas.transform);
+            confirmPanel.GetComponent<ConfirmPanelController>().Show(message, onConfirm);
         }
 
         public void ChangeToGameScene(GameType gameType){
