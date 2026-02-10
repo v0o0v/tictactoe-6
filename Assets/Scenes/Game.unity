@@ -2001,6 +2001,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf52d8dad1c4c31b3b033a826a7f3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tictactoe.GamePanelController
+  playerATurnImage: {fileID: 1342362161}
+  playerBTurnImage: {fileID: 491365570}
 --- !u!1001 &1914209665
 PrefabInstance:
   m_ObjectHideFlags: 0

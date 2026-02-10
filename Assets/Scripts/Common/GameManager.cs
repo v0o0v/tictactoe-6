@@ -9,6 +9,7 @@ namespace Tictactoe {
         [SerializeField] private GameObject settingsPanelPrefab;
 
         private Canvas _canvas;
+        private GamePanelController _gamePanelController;
 
         private GameType _gameType;
         private GameLogic _gameLogic;
@@ -19,8 +20,13 @@ namespace Tictactoe {
             if (scene.name == SCENE_GAME){
                 BlockController blockController = FindFirstObjectByType<BlockController>();
                 blockController?.InitBlocks();
+                _gamePanelController = FindFirstObjectByType<GamePanelController>();
                 _gameLogic = new GameLogic(GameType.DualPlay, blockController);
             }
+        }
+
+        public void SetGameTurn(PlayerType playerTurn){
+            _gamePanelController.SetPlayerTurnPanel(playerTurn);
         }
 
         public void OpenSettingsPanel(){
