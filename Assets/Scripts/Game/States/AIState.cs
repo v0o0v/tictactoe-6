@@ -12,12 +12,21 @@ namespace Tictactoe.States {
 
         public override void OnEnter(GameLogic gameLogic){
             GameManager.Instance.SetGameTurn(_playerType);
+            PlayerType[,] board = gameLogic.Board;
+            (int row, int col)? result = TicTacToeAI.GetBestMove(board);
+            if (result.HasValue){
+                int index = result.Value.row * Constants.BOARD_SIZE + result.Value.col;
+                HandleMove(gameLogic, index);
+            }
         }
 
         public override void HandleMove(GameLogic gameLogic, int index){
             ProcessMove(gameLogic, index, _playerType);
         }
-        public override void HandleNextTurn(GameLogic gameLogic){ }
+
+        public override void HandleNextTurn(GameLogic gameLogic){
+            gameLogic.ChangeGameState();
+        }
         public override void OnExit(GameLogic gameLogic){ }
 
     }

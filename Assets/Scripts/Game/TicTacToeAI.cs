@@ -5,7 +5,7 @@ namespace Tictactoe {
 
     public static class TicTacToeAI {
 
-        public static (int row, int col) GetBestMove(PlayerType[,] board){
+        public static (int row, int col)? GetBestMove(PlayerType[,] board){
             float bestScore = float.MinValue;
             (int row, int col) bestMove = (-1, -1);
 
@@ -24,7 +24,11 @@ namespace Tictactoe {
                 }
             }
 
-            return bestMove;
+            if (bestMove != (-1, -1)){
+                return bestMove;
+            }
+
+            return null;
         }
 
         private static float DoMinimax(PlayerType[,] board, int depth, bool isMaximizing){

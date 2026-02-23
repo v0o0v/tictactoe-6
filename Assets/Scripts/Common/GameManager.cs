@@ -23,7 +23,7 @@ namespace Tictactoe {
                 BlockController blockController = FindFirstObjectByType<BlockController>();
                 blockController?.InitBlocks();
                 _gamePanelController = FindFirstObjectByType<GamePanelController>();
-                _gameLogic = new GameLogic(GameType.DualPlay, blockController);
+                _gameLogic = new GameLogic(_gameType, blockController);
             }
         }
 

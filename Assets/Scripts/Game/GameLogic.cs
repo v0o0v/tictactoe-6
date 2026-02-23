@@ -16,6 +16,8 @@ namespace Tictactoe {
 
         public enum GameResult { None, Win, Lose, Draw }
 
+        public PlayerType[,] Board => _board;
+
         public GameLogic(GameType gameType, BlockController blockController){
             this.blockController = blockController;
             _board = new PlayerType[BOARD_SIZE, BOARD_SIZE];
