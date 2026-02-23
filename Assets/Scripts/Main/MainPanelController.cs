@@ -6,10 +6,16 @@ namespace Tictactoe {
     public class MainPanelController : MonoBehaviour {
 
         [SerializeField] private GameObject signupPanelPrefab;
+        [SerializeField] private GameObject loginPanelPrefab;
 
-        private void Start(){
+        public void OnClickSignupButton(){
             var instantiate = Instantiate(signupPanelPrefab, transform);
                 instantiate.GetComponent<SignupPanelController>().Show();
+        }
+        
+        public void OnClickLoginButton(){
+            var instantiate = Instantiate(loginPanelPrefab, transform);
+            instantiate.GetComponent<LoginPanelController>().Show();
         }
 
         public void onClickSinglePlayButton(){
