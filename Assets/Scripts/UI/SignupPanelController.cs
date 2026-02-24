@@ -4,19 +4,7 @@ using UnityEngine;
 
 namespace Tictactoe {
 
-    public struct SignupData {
-
-        public string username;
-        public string password;
-        public string nickname;
-
-        public SignupData(string username, string password1, string nickname1){
-            this.username = username;
-            this.password = password1;
-            this.nickname = nickname1;
-        }
-
-    }
+    
 
     public class SignupPanelController : PanelController {
 

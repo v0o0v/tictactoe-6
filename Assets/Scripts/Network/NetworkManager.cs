@@ -23,6 +23,18 @@ namespace Tictactoe {
 
                 if (www.result == UnityWebRequest.Result.ConnectionError ||
                     www.result == UnityWebRequest.Result.ProtocolError){
+                    switch (www.responseCode){
+                        case 400:
+                            Debug.LogError("Bad Request: " + www.downloadHandler.text);
+                            break;
+                        case 409:
+                            Debug.LogError("Conflict: " + www.downloadHandler.text);
+                            break;
+                        default:
+                            Debug.LogError("Signup failed: " + www.error);
+                            break;
+                    }
+
                     onFailure?.Invoke();
                 }
                 else{
@@ -32,7 +44,7 @@ namespace Tictactoe {
                 }
             }
         }
-        
+
         public IEnumerator Login(LoginData loginData, Action onSuccess, Action onFailure){
             string jsonString = JsonUtility.ToJson(loginData);
             byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonString);
@@ -50,15 +62,83 @@ namespace Tictactoe {
                     onFailure?.Invoke();
                 }
                 else{
+                    var cookie = www.GetResponseHeader("Set-Cookie");
+                    if (!string.IsNullOrEmpty(cookie)){
+                        string sid = cookie.Substring(0, cookie.IndexOf(';'));
+                        PlayerPrefs.SetString("SID", sid);
+                        PlayerPrefs.Save();
+                    }
+
                     var result = www.downloadHandler.text;
+                    var resultData = JsonUtility.FromJson<SigninData>(result);
                     Debug.Log("Login successful: " + result);
                     onSuccess?.Invoke();
                 }
             }
         }
 
+        public IEnumerator GetScore(Action<ScoreResult> onSuccess, Action onFailure){
+            using (UnityWebRequest www = new UnityWebRequest(Constants.ServerURL + "/users/score", UnityWebRequest.kHttpVerbGET)){
+                www.downloadHandler = new DownloadHandlerBuffer();
+                string sid = PlayerPrefs.GetString("SID", null);
+                if (!string.IsNullOrEmpty(sid)){
+                    www.SetRequestHeader("Cookie", sid);
+                }
+
+                yield return www.SendWebRequest();
+
+                if (www.result == UnityWebRequest.Result.ConnectionError ||
+                    www.result == UnityWebRequest.Result.ProtocolError){
+                    onFailure?.Invoke();
+                }
+                else{
+                    var resultData = JsonUtility.FromJson<ScoreResult>(www.downloadHandler.text);
+                    onSuccess?.Invoke(resultData);
+                }
+            }
+            yield return null;
+        }
+
         protected override void OnSceneLoad(Scene scene, LoadSceneMode mode){
             // Do nothing on scene load
+        }
+
+    }
+
+    public struct SigninData {
+
+        public string message;
+
+    }
+
+    public struct ScoreResult {
+
+        public int score;
+
+    }
+
+    public struct LoginData {
+
+        public string username;
+        public string password;
+
+        public LoginData(string username, string password){
+            this.username = username;
+            this.password = password;
+        }
+
+    }
+
+    public struct SignupData {
+
+        public string username;
+        public string password;
+        public string nickname;
+
+        public SignupData(string username, string password1, string nickname1){
+            this.username = username;
+            this.password = password1;
+            this.nickname = nickname1;
         }
 
     }
