@@ -98,6 +98,28 @@ namespace Tictactoe {
             }
             yield return null;
         }
+        
+        public IEnumerator Signout(Action<SigninData> onSuccess, Action onFailure){
+            using (UnityWebRequest www = new UnityWebRequest(Constants.ServerURL + "/users/signout", UnityWebRequest.kHttpVerbGET)){
+                www.downloadHandler = new DownloadHandlerBuffer();
+                string sid = PlayerPrefs.GetString("SID", null);
+                if (!string.IsNullOrEmpty(sid)){
+                    www.SetRequestHeader("Cookie", sid);
+                }
+
+                yield return www.SendWebRequest();
+
+                if (www.result == UnityWebRequest.Result.ConnectionError ||
+                    www.result == UnityWebRequest.Result.ProtocolError){
+                    onFailure?.Invoke();
+                }
+                else{
+                    var resultData = JsonUtility.FromJson<SigninData>(www.downloadHandler.text);
+                    onSuccess?.Invoke(resultData);
+                }
+            }
+            yield return null;
+        }
 
         protected override void OnSceneLoad(Scene scene, LoadSceneMode mode){
             // Do nothing on scene load

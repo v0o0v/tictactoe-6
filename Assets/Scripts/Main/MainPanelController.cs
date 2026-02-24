@@ -25,6 +25,13 @@ namespace Tictactoe {
             ));
         }
 
+        public void OnClickSignout(){
+            StartCoroutine(NetworkManager.Instance.Signout(
+                onSuccess: (signoutData) => { GameManager.Instance.OpenConfirmPanel("" + signoutData.message, () => { }); },
+                onFailure: () => { Debug.Log("로그아웃 실패"); }
+            ));
+        }
+
         public void OnClickSignupButton(){
             var instantiate = Instantiate(signupPanelPrefab, transform);
             instantiate.GetComponent<SignupPanelController>().Show();
