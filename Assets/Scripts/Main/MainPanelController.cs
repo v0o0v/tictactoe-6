@@ -27,7 +27,10 @@ namespace Tictactoe {
 
         public void OnClickSignout(){
             StartCoroutine(NetworkManager.Instance.Signout(
-                onSuccess: (signoutData) => { GameManager.Instance.OpenConfirmPanel("" + signoutData.message, () => { }); },
+                onSuccess: (signoutData) => {
+                    PlayerPrefs.DeleteKey("SID");
+                    GameManager.Instance.OpenConfirmPanel("" + signoutData.message, () => { });
+                },
                 onFailure: () => { Debug.Log("로그아웃 실패"); }
             ));
         }
