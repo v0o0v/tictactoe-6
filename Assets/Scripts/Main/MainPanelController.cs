@@ -57,6 +57,10 @@ namespace Tictactoe {
             GameManager.Instance.OpenSettingsPanel();
         }
 
+        public void onClickMultiPlayButton(){
+            GameManager.Instance.ChangeToGameScene(GameType.MultiPlay);
+        }
+
     }
 
 }

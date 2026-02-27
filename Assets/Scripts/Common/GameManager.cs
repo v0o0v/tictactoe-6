@@ -47,7 +47,14 @@ namespace Tictactoe {
         }
 
         public void ChangeToMainScene(){
+            _gameLogic?.Dispose();
+            _gameLogic = null;
             SceneManager.LoadScene("Main");
+        }
+
+        private void OnApplicationQuit(){
+            _gameLogic?.Dispose();
+            _gameLogic = null;
         }
 
     }

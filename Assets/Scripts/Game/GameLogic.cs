@@ -1,9 +1,10 @@
-﻿using Tictactoe.States;
+﻿using System;
+using Tictactoe.States;
 using static Tictactoe.Constants;
 
 namespace Tictactoe {
 
-    public class GameLogic {
+    public class GameLogic : IDisposable{
 
         public BlockController blockController;
 
@@ -18,6 +19,9 @@ namespace Tictactoe {
 
         public PlayerType[,] Board => _board;
 
+        private MultiplayManager _multiplayManager;
+        private string _multiplayRoomId;
+
         public GameLogic(GameType gameType, BlockController blockController){
             this.blockController = blockController;
             _board = new PlayerType[BOARD_SIZE, BOARD_SIZE];
@@ -31,6 +35,29 @@ namespace Tictactoe {
                     playerAState = new PlayerState(true);
                     playerBState = new PlayerState(false);
                     SetState(playerAState);
+                    break;
+                case GameType.MultiPlay:
+                    _multiplayManager = new MultiplayManager((state, roomId) => {
+                        _multiplayRoomId = roomId;
+                        switch (state){
+                            case MultiplayManageState.CreateRoom:
+                                break;
+                            case MultiplayManageState.JoinRoom:
+                                playerAState = new MultiPlayerState(true, _multiplayManager);
+                                playerBState = new PlayerState(false, _multiplayManager, _multiplayRoomId);
+                                SetState(playerAState);
+                                break;
+                            case MultiplayManageState.StartGame:
+                                playerAState = new PlayerState(true, _multiplayManager, _multiplayRoomId);
+                                playerBState = new MultiPlayerState(false, _multiplayManager);
+                                SetState(playerAState);
+                                break;
+                            case MultiplayManageState.ExitRoom:
+                                break;
+                            case MultiplayManageState.EndGame:
+                                break;
+                        }
+                    });
                     break;
             }
         }
@@ -83,6 +110,11 @@ namespace Tictactoe {
             GameManager.Instance.OpenConfirmPanel(resultStr
                 , () => { GameManager.Instance.ChangeToMainScene(); }
             );
+        }
+
+        public void Dispose(){
+            _multiplayManager?.LeaveRoom(_multiplayRoomId);
+            _multiplayManager?.Dispose();
         }
 
     }
